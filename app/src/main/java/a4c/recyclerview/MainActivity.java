@@ -1,5 +1,8 @@
 package a4c.recyclerview;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,13 +79,24 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(MainActivity.this, position + " ",Toast.LENGTH_SHORT).show();
-                    holder.relativeLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+
+                    int color = Color.TRANSPARENT;
+                    Drawable background = holder.relativeLayout.getBackground();
+                    if (background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+
+                    if(color != getResources().getColor(R.color.yellow)) {
+                        holder.relativeLayout.setBackgroundColor(getResources().getColor(R.color.yellow));
+                    } else {
+                        holder.relativeLayout.setBackgroundColor(getResources().getColor(R.color.white));
+                    }
                 }
            });
 
             holder.mainText.setText(foods.get(position).name);
             holder.lastMainText.setText(foods.get(position).lastName);
             holder.text.setText(foods.get(position).text);
+            holder.relativeLayout.setBackgroundColor(getResources().getColor(R.color.white));
 
             holder.like.setOnClickListener(new View.OnClickListener() {
                 @Override
